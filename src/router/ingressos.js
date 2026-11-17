@@ -1,11 +1,10 @@
 import { Router } from "express";
-import { conn } from "../configbd.js"
-import bcrypt from "bcrypt"
+import { conn } from "../database/conf.bd.js"
 
 const ingreRouter = Router()
 
 ingreRouter.post("/cadastrandoIngre", async (req, res)=>{
-    const{ cliente, sessao, adicionais, quantidades }=req.body
+    const{ cliente, sessao, adicionais, quantidades } = req.body
     const pagamento = adicionais*5 + quantidades*40
     conn.query(`insert into ingressos (cliente, pagamento, sessao, adicionais, quantidades) values ('${cliente}', ${pagamento}, ${sessao}, ${adicionais}, ${quantidades})`,
         (err, result)=>{
@@ -18,14 +17,13 @@ ingreRouter.post("/cadastrandoIngre", async (req, res)=>{
             }
         }
     )
-
 })
 ingreRouter.get("/mostrarIngre", (req, res)=>{
-    const{id, sessao}=req.body
-    conn.query(`select * from ingresso where id = '${id}' && sessao = ${sessao}`,
+    const{id, sessao} = req.body
+    conn.query(`select * from ingressos where id = '${id}' && sessao = ${sessao}`,
         (err, result)=>{
             if(err){
-                console.log("erro ao achar o id e/ou sessâo");
+                console.log("erro ao achar o id e/ou sessa");
             }else{
                 res.json({
                     resultado: result
@@ -51,7 +49,7 @@ ingreRouter.delete("/deleteIngre",  async (req, res)=>{
 ingreRouter.put("/mudarIngre", async (req, res)=>{
     const{id, cliente, sessao, adicionais, quantidades }=req.body
     const pagamento = adicionais*5 + quantidades*40
-    conn.query(`update ingressos into cliente = '${cliente}', sessao = ${sessao}, adcionais = ${adicionais}, quantidadeas = ${quantidades}, pagamento = ${pagamento}`,
+    conn.query(`update ingressos set cliente = '${cliente}', sessao = ${sessao}, adicionais = ${adicionais}, quantidades = ${quantidades}, pagamento = ${pagamento} where id = ${id}`,
        (err, result)=>{
         if(err){
             console.log("erro ao atualizar ingresso")
