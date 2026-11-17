@@ -1,3 +1,3 @@
 import { Router } from "express";
-import { conn } from "../configbd.js"
+import { conn } from "../database/conf.bd.js"
 
