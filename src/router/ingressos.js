@@ -12,7 +12,7 @@ ingreRouter.post("/cadastrandoIngre", async (req, res)=>{
                 console.log("erro ao adiconar");
             }else{
                 res.json({
-                    resultado: `Ingresso adcionado ao BD: ${result}`
+                    resultado: `Ingresso adcionado ao BD este é o id: ${result.insertId}`
                 })
             }
         }
@@ -23,7 +23,7 @@ ingreRouter.get("/mostrarIngre", (req, res)=>{
     conn.query(`select * from ingressos where id = '${id}' && sessao = ${sessao}`,
         (err, result)=>{
             if(err){
-                console.log("erro ao achar o id e/ou sessa");
+                console.log("erro ao achar o id e/ou sessao");
             }else{
                 res.json({
                     resultado: result
