@@ -3,7 +3,7 @@ import { conn } from "../database/conf.bd.js"
 
 const ingreRouter = Router()
 
-ingreRouter.post("/cadastrandoIngre", async (req, res)=>{
+ingreRouter.post("/cadastrandoIngre",(req, res)=>{
     const{ cliente, sessao, adicionais, quantidades } = req.body
     const pagamento = adicionais*5 + quantidades*40
     conn.query(`insert into ingressos (cliente, pagamento, sessao, adicionais, quantidades) values ('${cliente}', ${pagamento}, ${sessao}, ${adicionais}, ${quantidades})`,
@@ -32,7 +32,7 @@ ingreRouter.get("/mostrarIngre", (req, res)=>{
         }
     )
 })
-ingreRouter.delete("/deleteIngre",  async (req, res)=>{
+ingreRouter.delete("/deleteIngre", (req, res)=>{
     const{id}= req.body
     conn.query(`delete from ingressos where id = ${id}`,
         (err, result)=>{
@@ -46,7 +46,7 @@ ingreRouter.delete("/deleteIngre",  async (req, res)=>{
         }
     ) 
 })
-ingreRouter.put("/mudarIngre", async (req, res)=>{
+ingreRouter.put("/mudarIngre", (req, res)=>{
     const{id, cliente, sessao, adicionais, quantidades }=req.body
     const pagamento = adicionais*5 + quantidades*40
     conn.query(`update ingressos set cliente = '${cliente}', sessao = ${sessao}, adicionais = ${adicionais}, quantidades = ${quantidades}, pagamento = ${pagamento} where id = ${id}`,
